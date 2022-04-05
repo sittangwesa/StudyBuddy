@@ -1,15 +1,26 @@
 from email import message
+from email.policy import default
 from operator import mod
 from os import truncate
 from tkinter import CASCADE
 from turtle import update
 from venv import create
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db.models.deletion import CASCADE
 from django.forms import DateTimeField
 
 # Create your models here.
+
+class User(AbstractUser):
+    name = models.CharField(max_length=200, null= True)
+    email = models.EmailField(unique=True, null=True)
+    bio = models.TextField(null=True)
+    
+    avatar = models.ImageField(null= True, default="avatar.svg")
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
 class Topic(models.Model):
     name=models.CharField(max_length=200)
